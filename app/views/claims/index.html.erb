@@ -1,0 +1,41 @@
+<div id="product-details">
+  <h2><%= @product.name %></h2>
+  <p>Inventory: <span id="inventory-count"><%= @product.inventory_count %></span></p>
+
+  <p id="claim-status">Ready for the drop?</p>
+
+  <%# Ensure these data attributes are present for the JS to find %>
+  <button id="claim-button"
+          data-product-id="<%= @product.id %>"
+          data-user-id="<%= params[:user_id] %>">
+    Claim Now!
+  </button>
+</div>
+
+<script>
+  document.getElementById('claim-button').addEventListener('click', function(e) {
+    const btn = e.target;
+    const productId = btn.dataset.productId;
+    const userId = btn.dataset.userId;
+
+    // UI Update immediately
+    document.getElementById('claim-status').innerText = "Processing...";
+    btn.disabled = true;
+
+    // The Fetch Request
+    fetch(`/claims?product_id=${productId}&user_id=${userId}`, {
+      method: 'POST',
+      headers: {
+        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content,
+        'Accept': 'application/json'
+      }
+    })
+    .then(response => {
+      if (response.status === 409) {
+        // This handles the "Already Claimed" case immediately
+        document.getElementById('claim-status').innerText = "❌ You already have an item!";
+      }
+    })
+    .catch(error => console.error('Error:', error));
+  });
+</script>
