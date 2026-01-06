@@ -13,4 +13,3 @@ class User < ApplicationRecord
     vip
   end
 end
-

@@ -9,6 +9,6 @@ class CreateRestockNotifications < ActiveRecord::Migration[7.2]
     end
 
     # Prevent duplicate notification signups per user/product
-    add_index :restock_notifications, [:user_id, :product_id], unique: true
+    add_index :restock_notifications, [ :user_id, :product_id ], unique: true
   end
 end
