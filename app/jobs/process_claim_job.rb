@@ -59,7 +59,7 @@ class ProcessClaimJob < ApplicationJob
     ).call
 
     # Force the broadcast room to match the string ID
-    ActionCable.server.broadcast("claim_status_#{user_id.to_s}", result)
+    ActionCable.server.broadcast("claim_status_#{user_id}", result)
     puts "!!! BROADCAST COMPLETE FOR USER: #{user_id} !!!"
   end
 end

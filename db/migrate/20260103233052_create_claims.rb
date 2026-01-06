@@ -7,6 +7,6 @@ class CreateClaims < ActiveRecord::Migration[7.2]
       t.timestamps
     end
     # This is the "One claim per user per product" rule
-    add_index :claims, [:user_id, :product_id], unique: true
+    add_index :claims, [ :user_id, :product_id ], unique: true
   end
 end

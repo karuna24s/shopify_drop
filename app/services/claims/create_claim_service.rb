@@ -37,8 +37,8 @@ module Claims
         # ATOMIC UPDATE: This is the most important line for Shopify
         # It only decrements IF the inventory is > 0 in a single SQL statement.
         affected_rows = Product.where(id: @product_id)
-                               .where('inventory_count > 0')
-                               .update_all('inventory_count = inventory_count - 1')
+                               .where("inventory_count > 0")
+                               .update_all("inventory_count = inventory_count - 1")
 
         if affected_rows > 0
           Claim.create!(product_id: @product_id, user_id: @user_id)
