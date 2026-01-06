@@ -122,4 +122,3 @@ RSpec.describe Claims::CreateClaimService do
     end
   end
 end
-
